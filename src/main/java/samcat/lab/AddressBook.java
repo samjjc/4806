@@ -1,10 +1,8 @@
 package samcat.lab;
 
 import javax.persistence.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList; // import the ArrayList class
 import java.util.List;
-import javax.swing.*;
 
 
 @Entity
