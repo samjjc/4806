@@ -6,5 +6,12 @@
 </head>
 <body>
 <p th:text="'For addressbook: ' + ${id} + ', your buddies are:' + ${buddies}" />
+
+<p>Add New Buddy:</p>
+<form action="#" th:action="'/newbuddy/'+${id}" th:object="${buddy}" method="post">
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p>Phone Number: <input type="text" th:field="*{phoneNumber}"/></p>
+    <p><input type="submit" value="Submit" /></p>
+</form>
 </body>
 </html>

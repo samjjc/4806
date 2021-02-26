@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h3>Create addressbook:</h3>
+<button id="newBookButton">new book</button>
+
+<h3>Choose an existing addressbook:</h3>
+
+<h4>Address Book:</h4>
+<p>ID: <input id="getBookId"> </input></p>
+<button id="getBookButton">Choose book</button>
+
+
+<h5>Buddies:</h5>
+<div id="bookid"></div>
+
+<ul id="buddies">
+
+</ul>
+
+<h2>Add Buddy to this book:</h2>
+<p>Name: <input id="newBuddyName"> </input> </p>
+<p>Phone Number: <input id="newBuddyNumber"> </input> </p>
+<button id="newBuddyButton">add buddy</button>
+
+
+
+</body>
+</html>
+
+<script>
+    let book = null
+
+    const makeBook = () => {
+        console.log("clickd")
+        $.ajax({
+            url: "book/",
+            type: "POST",
+        }).then(function(data) {
+            console.log("received")
+            book = data
+            updateView()
+        });
+    }
+
+    const getBook = () => {
+        const id =$("#getBookId").val()
+        $.ajax({
+            url: "book/"+id+"/",
+            type: "GET",
+        }).then(function(data) {
+            book = data
+            updateView()
+        });
+    }
+
+    const addBuddy = () => {
+        const name =$("#newBuddyName").val()
+        const number =$("#newBuddyNumber").val()
+        const body = {name: name, phoneNumber: number}
+        $.ajax({
+            url: "book/"+book.id+"/buddy",
+            type: "POST",
+            data: JSON.stringify(body),
+            contentType: "application/json",
+            dataType: 'json',
+        }).then(function(data) {
+            book = data
+            updateView()
+        });
+    }
+
+    const updateView = () => {
+        console.log("book id")
+        console.log(book.id)
+        // $('#bookid').val(book.id);
+        $('#bookid').text("id: "+book.id);
+        const buddyView = book.buddies.map( bud => "<li> name: "+bud.name+", phone number: "+bud.phoneNumber+"</li>")
+        const buds = $("#buddies")
+        console.log(buds)
+        $("#buddies").empty()
+        $("#buddies").append(buddyView.join(''))
+    }
+
+    $(document).ready(function() {
+
+
+        document.getElementById("newBookButton").addEventListener("click", makeBook);
+        document.getElementById("getBookButton").addEventListener("click", getBook);
+        document.getElementById("newBuddyButton").addEventListener("click", addBuddy);
+    });
+
+
+</script>

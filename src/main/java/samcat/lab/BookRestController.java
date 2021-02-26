@@ -19,6 +19,12 @@ public class BookRestController {
         return book;
     }
 
+    @GetMapping("/book/{id}")
+    public AddressBook addBuddy(@PathVariable Long id) {
+        AddressBook book = repository.findById(id).get();
+        return book;
+    }
+
     //curl -i -H "Content-Type:application/json" -d '{"name": "SAMM", "phoneNumber": "987"}' http://localhost:8080/book/1/buddy
     @PostMapping("/book/{id}/buddy")
     public AddressBook addBuddy(@RequestBody BuddyInfo buddy,
