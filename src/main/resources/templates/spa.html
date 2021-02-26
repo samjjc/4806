@@ -23,11 +23,12 @@
 
 </ul>
 
+<div id="buddyForm" hidden>
 <h2>Add Buddy to this book:</h2>
 <p>Name: <input id="newBuddyName"> </input> </p>
 <p>Phone Number: <input id="newBuddyNumber"> </input> </p>
 <button id="newBuddyButton">add buddy</button>
-
+</div>
 
 
 </body>
@@ -76,9 +77,11 @@
     }
 
     const updateView = () => {
-        console.log("book id")
-        console.log(book.id)
-        // $('#bookid').val(book.id);
+        if(book == null) {
+            $('#buddyForm').hide()
+            return
+        }
+        $('#buddyForm').show()
         $('#bookid').text("id: "+book.id);
         const buddyView = book.buddies.map( bud => "<li> name: "+bud.name+", phone number: "+bud.phoneNumber+"</li>")
         const buds = $("#buddies")
@@ -93,6 +96,7 @@
         document.getElementById("newBookButton").addEventListener("click", makeBook);
         document.getElementById("getBookButton").addEventListener("click", getBook);
         document.getElementById("newBuddyButton").addEventListener("click", addBuddy);
+        updateView()
     });
 
 
