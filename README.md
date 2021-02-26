@@ -2,7 +2,7 @@
 
 ## Webapp
 
-### cleint side rendered:
+### client side rendered:
 
 https://sysclab.herokuapp.com/
 
